@@ -1,15 +1,16 @@
 {
     "compilerOptions": {
-        "noImplicitAny": true,
-        "module": "es6",
-        "target": "es5",
-        "moduleResolution": "node",
-        "noFallthroughCasesInSwitch": true,
-        "newLine": "CRLF",
-        "noImplicitThis": true,
+        "module": "ESNext",
+        "target": "ESNext",
+        "moduleResolution": "NodeNext",
+        
         "strict": true,
         "declaration": true,
-        "sourceMap": true
+        "sourceMap": true,
+
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitAny": true,
+        "noImplicitThis": true
     },
     "files": [
         "autocomplete.ts"
