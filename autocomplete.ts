@@ -1,13 +1,3 @@
-export const enum EventTrigger {
-    Keyboard = 0,
-    Focus = 1
-}
-
-export interface AutocompleteItem {
-    label?: string;
-    group?: string;
-}
-
 /**
  * @param {T} item - selected item
  */
@@ -16,10 +6,15 @@ type OnSelect<T> = (item: T, input: HTMLInputElement | HTMLTextAreaElement) => v
 /**
  * @param {string} text - text in the input field
  * @param {(items: T[] | false) => void} update - a callback function that must be called after suggestions are prepared
- * @param {EventTrigger} trigger - type of the event that triggered the fetch
+ * @param {boolean} isFocus - type of the event that triggered the fetch
  * @param {number} cursorPos - position of the cursor in the input field
  */
-type Fetch<T> = (text: string, update: (items: T[] | false) => void, trigger: EventTrigger, cursorPos: number) => void;
+type Fetch<T> = (text: string, update: (items: T[] | false) => void, isFocus: boolean, cursorPos: number) => void;
+
+export interface AutocompleteItem {
+    label?: string;
+    group?: string;
+}
 
 export interface AutocompleteSettings<T extends AutocompleteItem> {
     /**
@@ -278,9 +273,9 @@ export default class Autocomplete<T extends AutocompleteItem> {
     keyupEventHandler(event: KeyboardEvent): void {
         const key = event.key;
 
-        const ignore = ["ArrowUp", "Enter", "Escape", "ArrowRight", "ArrowLeft", "Shift", "Control", "Alt", "CapsLock", "Meta", "Tab"];
-        for (const key of ignore) {
-            if (key === key) {
+        const ignores = ["ArrowUp", "Enter", "Escape", "ArrowRight", "ArrowLeft", "Shift", "Control", "Alt", "CapsLock", "Meta", "Tab"];
+        for (const ignore of ignores) {
+            if (ignore === key) {
                 return;
             }
         }
@@ -294,7 +289,7 @@ export default class Autocomplete<T extends AutocompleteItem> {
             return;
         }
 
-        this.startFetch(EventTrigger.Keyboard);
+        this.startFetch(false);
     }
 
     /**
@@ -374,9 +369,7 @@ export default class Autocomplete<T extends AutocompleteItem> {
                 if (!containerIsDisplayed || this.items.length < 1) {
                     return;
                 }
-                key === "ArrowUp"
-                    ? this.selectPrev()
-                    : this.selectNext();
+                key === "ArrowUp" ? this.selectPrev() : this.selectNext();
                 this.update();
             }
 
@@ -402,11 +395,11 @@ export default class Autocomplete<T extends AutocompleteItem> {
 
     focusEventHandler(): void {
         if (this.showOnFocus) {
-            this.startFetch(EventTrigger.Focus);
+            this.startFetch(true);
         }
     }
 
-    startFetch(trigger: EventTrigger) {
+    startFetch(isFocus: boolean) {
         // If multiple keys were pressed, before we get an update from server,
         // this may cause redrawing autocomplete multiple times after the last key was pressed.
         // To avoid this, the number of times keyboard was pressed will be saved and checked before redraw.
@@ -415,7 +408,7 @@ export default class Autocomplete<T extends AutocompleteItem> {
         const inputText = this.input.value;
         const cursorPos = this.input.selectionStart || 0;
 
-        if (inputText.length >= this.minLen || trigger === EventTrigger.Focus) {
+        if (inputText.length >= this.minLen || isFocus) {
             this.fetch(inputText, (items) => {
                 if (this.keypressCounter === savedKeypressCounter && items) {
                     this.items = items
@@ -423,7 +416,7 @@ export default class Autocomplete<T extends AutocompleteItem> {
                     this.selected = (items.length < 1) ? undefined : items[0];
                     this.update();
                 }
-            }, trigger, cursorPos);
+            }, isFocus, cursorPos);
         } else {
             this.clear();
         }
