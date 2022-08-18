@@ -2,21 +2,17 @@
   "name": "autocomplete",
   "version": "1.0.0",
   "description": "Fast, light, and modern autocomplete",
-  "main": "autocomplete.js",
+  "type": "module",
+  "exports": "./autocomplete.js",
   "scripts": {
-    "build:js": "rollup -c",
-    "build:css": "node ./node_modules/clean-css-cli/bin/cleancss ./autocomplete.css -o ./autocomplete.min.css",
-    "build": "npm run build:js && npm run build:css"
+    "build": "npx swc ./autocomplete.ts -o autocomplete.js"
   },
   "author": "T. Luke Cloninger",
   "license": "MIT",
   "devDependencies": {
-    "clean-css-cli": "4.3.0",
-    "rollup": "2.32.1",
-    "rollup-plugin-sourcemaps": "0.6.3",
-    "rollup-plugin-terser": "7.0.2",
-    "rollup-plugin-typescript2": "0.29.0",
-    "typescript": "4.0.5"
+    "@swc/cli": "^0.1.57",
+    "@swc/core": "^1.2.237",
+    "typescript": "latest"
   },
   "homepage": "https://github.com/EccentricVamp/autocomplete",
   "repository": {
