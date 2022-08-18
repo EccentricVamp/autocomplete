@@ -13,6 +13,6 @@
         "noImplicitThis": true
     },
     "files": [
-        "autocomplete.ts"
+        "dropcomplete.ts"
     ]
 }

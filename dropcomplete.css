@@ -1,5 +1,5 @@
 
-.autocomplete {
+.dropcomplete {
     background: white;
     z-index: 1000;
     font: 14px/22px "-apple-system", BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -8,20 +8,20 @@
     border: 1px solid rgba(50, 50, 50, 0.6);
 }
 
-.autocomplete * {
+.dropcomplete * {
     font: inherit;
 }
 
-.autocomplete > div {
+.dropcomplete > div {
     padding: 0 4px;
 }
 
-.autocomplete .group {
+.dropcomplete .group {
     background: #eee;
 }
 
-.autocomplete > div:hover:not(.group),
-.autocomplete > div.selected {
+.dropcomplete > div:hover:not(.group),
+.dropcomplete > div.selected {
     background: #81ca91;
     cursor: pointer;
 }

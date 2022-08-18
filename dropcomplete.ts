@@ -11,19 +11,19 @@ type OnSelect<T> = (item: T, input: HTMLInputElement | HTMLTextAreaElement) => v
  */
 type Fetch<T> = (text: string, update: (items: T[] | false) => void, isFocus: boolean, cursorPos: number) => void;
 
-export interface AutocompleteItem {
+export interface DropcompleteItem {
     label?: string;
     group?: string;
 }
 
-export interface AutocompleteSettings<T extends AutocompleteItem> {
+export interface DropcompleteSettings<T extends DropcompleteItem> {
     /**
-     * Autocomplete will be attached to this element.
+     * dropcomplete will be attached to this element.
      */
     input: HTMLInputElement | HTMLTextAreaElement;
 
     /**
-     * Specify the minimum text length required to show autocomplete.
+     * Specify the minimum text length required to show dropcomplete.
      */
     minLength?: number;
 
@@ -33,7 +33,7 @@ export interface AutocompleteSettings<T extends AutocompleteItem> {
     emptyMsg?: string;
 
     /**
-     * Show autocomplete on focus event. Focus event will ignore the `minLength` property and will always call `fetch`.
+     * Show dropcomplete on focus event. Focus event will ignore the `minLength` property and will always call `fetch`.
      */
     showOnFocus?: boolean;
 
@@ -43,21 +43,17 @@ export interface AutocompleteSettings<T extends AutocompleteItem> {
     preventSubmit?: boolean;
 
     /**
-     * This method will be called when user choose an item in autocomplete.
+     * This method will be called when user choose an item in dropcomplete.
      */
     onSelect: OnSelect<T>;
 
     /**
-     * This method will be called to prepare suggestions and then pass them to autocomplete.
+     * This method will be called to prepare suggestions and then pass them to dropcomplete.
      */
     fetch: Fetch<T>;
 }
 
-export interface AutocompleteResult {
-    destroy: () => void;
-}
-
-export default class Autocomplete<T extends AutocompleteItem> {
+export default class Dropcomplete<T extends DropcompleteItem> {
     input: HTMLInputElement | HTMLTextAreaElement;
     minLen: number;
     emptyMsg?: string;
@@ -72,7 +68,7 @@ export default class Autocomplete<T extends AutocompleteItem> {
     selected?: T;
     keypressCounter: number;
 
-    constructor(settings: AutocompleteSettings<T>) {
+    constructor(settings: DropcompleteSettings<T>) {
         this.input = settings.input;
         this.minLen = settings.minLength ?? 2;
         this.emptyMsg = settings.emptyMsg;
@@ -82,7 +78,7 @@ export default class Autocomplete<T extends AutocompleteItem> {
         this.fetch = settings.fetch;
 
         this.container = document.createElement("div");
-        this.container.classList.add("autocomplete");
+        this.container.classList.add("dropcomplete");
         this.container.style.position = "absolute";
 
         this.items = [];
@@ -117,14 +113,14 @@ export default class Autocomplete<T extends AutocompleteItem> {
     }
 
     /**
-     * Check if container for autocomplete is displayed
+     * Check if container for dropcomplete is displayed
      */
     containerDisplayed(): boolean {
         return !!this.container.parentNode;
     }
 
     /**
-     * Clear autocomplete state and hide container
+     * Clear dropcomplete state and hide container
      */
     clear(): void {
         // prevent the update call if there are pending AJAX requests
@@ -137,7 +133,7 @@ export default class Autocomplete<T extends AutocompleteItem> {
     }
 
     /**
-     * Update autocomplete position
+     * Update dropcomplete position
      */
     updatePosition(): void {
         if (!this.containerDisplayed()) {
@@ -178,11 +174,11 @@ export default class Autocomplete<T extends AutocompleteItem> {
     }
 
     /**
-     * Redraw the autocomplete div element with suggestions
+     * Redraw the dropcomplete div element with suggestions
      */
     update(): void {
 
-        // delete all children from autocomplete DOM container
+        // delete all children from dropcomplete DOM container
         while (this.container.firstChild) {
             this.container.removeChild(this.container.firstChild);
         }
@@ -235,7 +231,7 @@ export default class Autocomplete<T extends AutocompleteItem> {
     }
 
     /**
-     * Renders autocomplete item
+     * Renders dropcomplete item
      */
     render(item: T): HTMLDivElement | undefined {
         const itemElement = document.createElement("div");
@@ -244,7 +240,7 @@ export default class Autocomplete<T extends AutocompleteItem> {
     };
 
     /**
-     * Renders autocomplete group
+     * Renders dropcomplete group
      */
     renderGroup(groupName: string): HTMLDivElement | undefined {
         const groupDiv = document.createElement("div");
@@ -284,7 +280,7 @@ export default class Autocomplete<T extends AutocompleteItem> {
             return;
         }
 
-        // the down key is used to open autocomplete
+        // the down key is used to open dropcomplete
         if (key === "ArrowDown" && this.containerDisplayed()) {
             return;
         }
@@ -401,7 +397,7 @@ export default class Autocomplete<T extends AutocompleteItem> {
 
     startFetch(isFocus: boolean) {
         // If multiple keys were pressed, before we get an update from server,
-        // this may cause redrawing autocomplete multiple times after the last key was pressed.
+        // this may cause redrawing dropcomplete multiple times after the last key was pressed.
         // To avoid this, the number of times keyboard was pressed will be saved and checked before redraw.
         const savedKeypressCounter = ++this.keypressCounter;
 

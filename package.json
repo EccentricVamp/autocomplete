@@ -1,11 +1,11 @@
 {
-  "name": "autocomplete",
+  "name": "dropcomplete",
   "version": "1.0.0",
-  "description": "Fast, light, and modern autocomplete",
+  "description": "Fast, light, and modern dropcomplete",
   "type": "module",
-  "exports": "./autocomplete.js",
+  "exports": "./dropcomplete.js",
   "scripts": {
-    "build": "npx swc ./autocomplete.ts -o autocomplete.js"
+    "build": "npx swc ./dropcomplete.ts -o dropcomplete.js"
   },
   "author": "T. Luke Cloninger",
   "license": "MIT",
@@ -14,11 +14,11 @@
     "@swc/core": "^1.2.237",
     "typescript": "latest"
   },
-  "homepage": "https://github.com/EccentricVamp/autocomplete",
+  "homepage": "https://github.com/EccentricVamp/dropcomplete",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/EccentricVamp/autocomplete.git"
+    "url": "git+https://github.com/EccentricVamp/dropcomplete.git"
   },
-  "bugs": "https://github.com/EccentricVamp/autocomplete/issues",
-  "types": "autocomplete.d.ts"
+  "bugs": "https://github.com/EccentricVamp/dropcomplete/issues",
+  "types": "dropcomplete.d.ts"
 }
