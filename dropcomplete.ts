@@ -85,12 +85,12 @@ export default class Dropcomplete<T extends DropcompleteItem> {
         this.inputValue = "";
         this.keypressCounter = 0;
 
-        this.input.addEventListener("keydown", this.keydownEventHandler as EventListenerOrEventListenerObject);
-        this.input.addEventListener("keyup", this.keyupEventHandler as EventListenerOrEventListenerObject);
-        this.input.addEventListener("blur", this.blurEventHandler);
-        this.input.addEventListener("focus", this.focusEventHandler);
-        window.addEventListener("resize", this.resizeEventHandler);
-        document.addEventListener("scroll", this.scrollEventHandler, true);
+        this.input.addEventListener("keydown", event => this.keydownEventHandler(event as KeyboardEvent));
+        this.input.addEventListener("keyup", event => this.keyupEventHandler(event as KeyboardEvent));
+        this.input.addEventListener("blur", () => this.blurEventHandler());
+        this.input.addEventListener("focus", () => this.focusEventHandler());
+        window.addEventListener("resize", () => this.resizeEventHandler());
+        document.addEventListener("scroll", event => this.scrollEventHandler(event), true);
     }
 
     /**
