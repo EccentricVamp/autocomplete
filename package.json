@@ -4,8 +4,9 @@
   "description": "Fast, light, and modern autocomplete",
   "type": "module",
   "exports": "./dropcomplete.js",
+  "packageManager": "pnpm@7.9.4",
   "scripts": {
-    "build": "npx swc ./dropcomplete.ts -o dropcomplete.js"
+    "build": "pnpx swc ./dropcomplete.ts -o dropcomplete.js"
   },
   "author": "T. Luke Cloninger",
   "license": "MIT",
