@@ -13,7 +13,7 @@
   "devDependencies": {
     "@swc/cli": "^0.1.57",
     "@swc/core": "^1.2.237",
-    "typescript": "latest"
+    "typescript": "^4.7.4"
   },
   "homepage": "https://github.com/EccentricVamp/dropcomplete",
   "repository": {
