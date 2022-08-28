@@ -309,7 +309,7 @@ export default class Dropcomplete<T extends DropcompleteItem> {
             }
         }
     }
-    
+
     selectPrev(): void {
         if (this.items.length < 1) {
             this.selected = undefined;
@@ -326,7 +326,7 @@ export default class Dropcomplete<T extends DropcompleteItem> {
             }
         }
     }
-    
+
     selectNext(): void {
         if (this.items.length < 1) {
             this.selected = undefined;
