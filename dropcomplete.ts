@@ -18,37 +18,37 @@ export interface DropcompleteItem {
 
 export interface DropcompleteSettings<T extends DropcompleteItem> {
     /**
-     * dropcomplete will be attached to this element.
+     * Dropcomplete will be attached to this element
      */
     input: HTMLInputElement | HTMLTextAreaElement;
 
     /**
-     * Specify the minimum text length required to show dropcomplete.
+     * Minimum text length required to show dropcomplete
      */
     minLength?: number;
 
     /**
-     * The message that will be showed when there are no suggestions that match the entered value.
+     * Shown when there are no suggestions that match the input
      */
     emptyMsg?: string;
 
     /**
-     * Show dropcomplete on focus event. Focus event will ignore the `minLength` property and will always call `fetch`.
+     * Show dropcomplete on focus event
      */
     showOnFocus?: boolean;
 
     /**
-     * Prevents automatic form submit when ENTER is pressed
+     * Prevents form submission when `Enter` is pressed
      */
     preventSubmit?: boolean;
 
     /**
-     * This method will be called when user choose an item in dropcomplete.
+     * Called when user choose an item in dropcomplete
      */
     onSelect: OnSelect<T>;
 
     /**
-     * This method will be called to prepare suggestions and then pass them to dropcomplete.
+     * Called to prepare suggestions and then pass them to dropcomplete
      */
     fetch: Fetch<T>;
 }
@@ -113,17 +113,17 @@ export default class Dropcomplete<T extends DropcompleteItem> {
     }
 
     /**
-     * Check if container for dropcomplete is displayed
+     * Check if container is displayed
      */
     containerDisplayed(): boolean {
         return !!this.container.parentNode;
     }
 
     /**
-     * Clear dropcomplete state and hide container
+     * Clear state and hide container
      */
     clear(): void {
-        // prevent the update call if there are pending AJAX requests
+        // Prevent the update call if there are pending AJAX requests
         this.keypressCounter++;
 
         this.items = [];
@@ -132,9 +132,6 @@ export default class Dropcomplete<T extends DropcompleteItem> {
         this.detach();
     }
 
-    /**
-     * Update dropcomplete position
-     */
     updatePosition(): void {
         if (!this.containerDisplayed()) {
             return;
@@ -174,11 +171,10 @@ export default class Dropcomplete<T extends DropcompleteItem> {
     }
 
     /**
-     * Redraw the dropcomplete div element with suggestions
+     * Redraw with suggestions
      */
     update(): void {
-
-        // delete all children from dropcomplete DOM container
+        // Delete all children from dropcomplete DOM container
         while (this.container.firstChild) {
             this.container.removeChild(this.container.firstChild);
         }
@@ -231,7 +227,7 @@ export default class Dropcomplete<T extends DropcompleteItem> {
     }
 
     /**
-     * Renders dropcomplete item
+     * Renders an item
      */
     render(item: T): HTMLDivElement | undefined {
         const itemElement = document.createElement("div");
@@ -240,11 +236,11 @@ export default class Dropcomplete<T extends DropcompleteItem> {
     };
 
     /**
-     * Renders dropcomplete group
+     * Renders a group
      */
-    renderGroup(groupName: string): HTMLDivElement | undefined {
+    renderGroup(group: string): HTMLDivElement | undefined {
         const groupDiv = document.createElement("div");
-        groupDiv.textContent = groupName;
+        groupDiv.textContent = group;
         return groupDiv;
     };
 
@@ -280,7 +276,7 @@ export default class Dropcomplete<T extends DropcompleteItem> {
             return;
         }
 
-        // the down key is used to open dropcomplete
+        // `ArrowDown` is used to open dropcomplete
         if (key === "ArrowDown" && this.containerDisplayed()) {
             return;
         }
@@ -289,7 +285,7 @@ export default class Dropcomplete<T extends DropcompleteItem> {
     }
 
     /**
-     * Automatically move scroll bar if selected item is not visible
+     * Move scroll bar if selected item is not visible
      */
     updateScroll(): void {
         const elements = this.container.getElementsByClassName("selected");
@@ -313,10 +309,7 @@ export default class Dropcomplete<T extends DropcompleteItem> {
             }
         }
     }
-
-    /**
-     * Select the previous item in suggestions
-     */
+    
     selectPrev(): void {
         if (this.items.length < 1) {
             this.selected = undefined;
@@ -333,10 +326,7 @@ export default class Dropcomplete<T extends DropcompleteItem> {
             }
         }
     }
-
-    /**
-     * Select the next item in suggestions
-     */
+    
     selectNext(): void {
         if (this.items.length < 1) {
             this.selected = undefined;
@@ -428,7 +418,7 @@ export default class Dropcomplete<T extends DropcompleteItem> {
     }
 
     /**
-     * This function will remove DOM elements and clear event handlers
+     * Remove elements and clear event handlers
      */
     destroy(): void {
         this.input.removeEventListener("keydown", this.keydownEventHandler as EventListenerOrEventListenerObject);
