@@ -6,7 +6,7 @@
   "exports": "./dropcomplete.js",
   "packageManager": "pnpm@7.9.4",
   "scripts": {
-    "build": "pnpx swc ./dropcomplete.ts -o dropcomplete.js"
+    "build": "swc ./dropcomplete.ts -o dropcomplete.js"
   },
   "author": "T. Luke Cloninger",
   "license": "MIT",
@@ -20,6 +20,5 @@
     "type": "git",
     "url": "git+https://github.com/EccentricVamp/dropcomplete.git"
   },
-  "bugs": "https://github.com/EccentricVamp/dropcomplete/issues",
-  "types": "dropcomplete.d.ts"
+  "bugs": "https://github.com/EccentricVamp/dropcomplete/issues"
 }
